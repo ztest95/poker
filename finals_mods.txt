@@ -1,0 +1,61 @@
+
+endpoint
+/start_game/{4}
+
+body:
+{
+    "players" : {
+        {
+            "name":"Chance"
+        },
+        {
+            "name":"AliceGuo"
+        },
+        {
+            "name":"Lakas Tama"
+        },
+        {
+            "name":"Akira Chancellor"
+        }
+    }
+}
+
+for example , Lakas Tama and Akira Chancellor is not included in the registered players
+log message in the console
+
+persist/save the winner together with the losers in the DB
+
+event   -> id
+    players -> id, name
+        winner  -> hand (cards)     one to many
+        loser   -> hand (cards)     one to many
+
+
+/event/{id}
+{
+    "players" : {
+            {
+                "name":"Chance",
+                "hand":"One Pair (J) - A,9,6 High"
+            },
+            {
+                "name":"AliceGuo"
+            },
+            {
+                "name":"Lakas Tama"
+            },
+            {
+                "name":"Akira Chancellor"
+            }
+        },
+    "winner" : "AliceGuo"
+
+
+
+}
+
+
+
+
+
+
