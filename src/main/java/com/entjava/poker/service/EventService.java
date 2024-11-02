@@ -13,7 +13,7 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Optional<Event> getEventById(Long id) {
+    public Optional<Event> getEventById(Integer id) {
         return eventRepository.findById(id);
     }
 }

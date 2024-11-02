@@ -1,31 +1,34 @@
 package com.entjava.poker.model;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    private Integer id;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @ManyToMany
+    @JoinTable(
+            name="event_player",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "player_id")
+    )
+    private Set<Player> players = new HashSet<>();
 
-    public String getName() {
-        return name;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "winner", referencedColumnName = "id")
+    private Player player;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }
