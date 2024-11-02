@@ -13,12 +13,15 @@ import java.util.Optional;
 public class GeneralController {
 
     @Autowired
-    private EventService eventService;
+    private final EventService eventService;
+
+    public GeneralController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping("/event/{id}")
-    public Optional<Event> events(@PathVariable String id) {
-        return eventService.getEventById(Long.valueOf(id));
-//                .orElseThrow(() -> new RunTimeException("Event not found"));
+    public Event events(@PathVariable Long id) {
+        return eventService.getEventById(id).orElse(null);
     }
 
 }
