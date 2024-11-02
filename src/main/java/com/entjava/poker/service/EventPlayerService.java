@@ -1,19 +1,16 @@
 package com.entjava.poker.service;
 
-import com.entjava.poker.model.Player;
+import com.entjava.poker.dto.*;
 import com.entjava.poker.model.Event;
 import com.entjava.poker.model.EventPlayer;
 import com.entjava.poker.repository.EventPlayerRepository;
-import com.entjava.poker.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.List;
-import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.stream.Collectors;
 
 @Service
 public class EventPlayerService {
@@ -22,14 +19,66 @@ public class EventPlayerService {
     private EventPlayerRepository eventPlayerRepository;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
-    public Set<EventPlayer> getPlayersByEventId(Integer id) {
-        return eventPlayerRepository.findByEventId(id);
+    @Autowired
+    private PlayerService playerService;
+
+    public List<EventPlayerDTO> getPlayersByEventId(Integer eventId) {
+        return eventPlayerRepository.findByEventId(eventId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public Set<EventPlayer> getEventsByPlayerId(Integer id) {
-        return eventPlayerRepository.findByPlayerId(id);
+    public List<EventPlayerDTO> getEventsByPlayerId(Integer playerId) {
+        return eventPlayerRepository.findByPlayerId(playerId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
-    
+
+    public List<String> getWinnersByEventId(Integer eventId) {
+        Set<EventPlayer> winners = eventPlayerRepository.findByEventIdAndIsWinnerTrue(eventId);
+
+        return winners.stream()
+                .map(eventPlayer -> eventPlayer.getPlayer().getName())
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerHandDTO> getPlayerNamesAndHandsByEventId(Integer eventId) {
+        return eventPlayerRepository.findByEventId(eventId)
+                .stream()
+                .map(eventPlayer -> new PlayerHandDTO(
+                        eventPlayer.getPlayer().getName(),
+                        eventPlayer.getHand()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    public Optional<EventResultDTO> custom_getEventById(Integer id) {
+
+        Optional<Event> events = eventService.getEventById(id);
+        List<PlayerHandDTO> players = this.getPlayerNamesAndHandsByEventId(id);
+        List<String> winners = this.getWinnersByEventId(id);
+        EventResultDTO response = new EventResultDTO(players, winners);
+
+        return Optional.of(response);
+    }
+
+    private EventPlayerDTO convertToDTO(EventPlayer eventPlayer) {
+        EventPlayerDTO dto = new EventPlayerDTO();
+        dto.setId(eventPlayer.getId());
+        dto.setIsWinner(eventPlayer.isWinner());
+        dto.setHands(eventPlayer.getHand());
+
+        PlayerDTO playerDTO = new PlayerDTO();
+        playerDTO.setId(eventPlayer.getPlayer().getId());
+        playerDTO.setName(eventPlayer.getPlayer().getName());
+        dto.setPlayer(playerDTO);
+
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(eventPlayer.getEvent().getId());
+        dto.setEvent(eventDTO);
+
+        return dto;
+    }
 }

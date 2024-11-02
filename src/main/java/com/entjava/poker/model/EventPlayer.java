@@ -4,10 +4,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.*;
 
-import java.lang.annotation.Inherited;
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 public class EventPlayer {
     @Id 
@@ -22,7 +18,16 @@ public class EventPlayer {
     @JoinColumn(name = "player_id")
     private Player player;
 
+    private boolean isWinner;
     private String hand;
+
+    public boolean isWinner() {
+        return this.isWinner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.isWinner = winner;
+    }
 
     public Integer getId() {
         return id;

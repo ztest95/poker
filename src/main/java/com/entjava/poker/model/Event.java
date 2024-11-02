@@ -1,11 +1,11 @@
 package com.entjava.poker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 
 @Entity
 public class Event {
@@ -13,31 +13,24 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany
+    @OneToMany
+    @JsonManagedReference
     @JoinTable(
             name="event_player",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id")
+            joinColumns = {
+                    @JoinColumn(name = "event_id", referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "player_id", referencedColumnName = "id")
+            }
     )
     private Set<Player> players = new HashSet<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "winner", referencedColumnName = "id")
-    private Player player;
 
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Player getWinner() {
-        return this.player;
-    }
-
-    public void setWinnerId(Integer id) {
         this.id = id;
     }
 
