@@ -30,6 +30,13 @@ dependencies {
 
 	compile('org.springframework.boot:spring-boot-devtools')
 
+	// JDBC
+	compile('org.springframework.boot:spring-boot-starter-web')
+	// JPA
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	// PostgreSQL
+	runtimeOnly('com.h2database:h2')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
