@@ -31,4 +31,13 @@ public class Event {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getWinnerId() {
+        return id;
+    }
+
+    public void setWinnerId(Integer id) {
+        this.id = id;
+    }
+
 }
