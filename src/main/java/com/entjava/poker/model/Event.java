@@ -5,6 +5,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -32,12 +33,20 @@ public class Event {
         this.id = id;
     }
 
-    public Integer getWinnerId() {
-        return id;
+    public Player getWinner() {
+        return this.player;
     }
 
     public void setWinnerId(Integer id) {
         this.id = id;
+    }
+
+    public Set<Player> getPlayers() {
+        return this.players;
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 
 }
