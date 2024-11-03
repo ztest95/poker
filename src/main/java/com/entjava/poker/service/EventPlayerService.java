@@ -3,7 +3,9 @@ package com.entjava.poker.service;
 import com.entjava.poker.dto.*;
 import com.entjava.poker.model.Event;
 import com.entjava.poker.model.EventPlayer;
+import com.entjava.poker.model.Player;
 import com.entjava.poker.repository.EventPlayerRepository;
+import com.entjava.poker.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class EventPlayerService {
 
     @Autowired
     private PlayerService playerService;
+
+    @Autowired
+    private PlayerRepository playerRepository;
 
     public List<EventPlayerDTO> getPlayersByEventId(Integer eventId) {
         return eventPlayerRepository.findByEventId(eventId).stream()
@@ -62,6 +67,19 @@ public class EventPlayerService {
         EventResultDTO response = new EventResultDTO(players, winners);
 
         return Optional.of(response);
+    }
+
+    public List<String> checkPlayerNamesExist(List<String> playerNames) {
+
+        List<Player> foundPlayers = playerRepository.findByNameIn(playerNames);
+
+        Set<String> foundPlayerNames = foundPlayers.stream()
+                .map(Player::getName)
+                .collect(Collectors.toSet());
+
+        return playerNames.stream()
+                .filter(name -> !foundPlayerNames.contains(name))
+                .collect(Collectors.toList());
     }
 
     private EventPlayerDTO convertToDTO(EventPlayer eventPlayer) {
