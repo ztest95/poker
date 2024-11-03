@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 
@@ -66,7 +67,7 @@ public class GameController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/start_game/{playerCount}")
+	@PostMapping("/start_game/{playerCount}")
 	public String startGame(@RequestBody Map<String, List<Map<String, String>>> request) {
 
 

@@ -72,6 +72,17 @@
         </div>
     </div>
 
+    <h1>Start Game</h1>
+
+    <label for="playerCount">Enter number of players (2-6): </label>
+    <input type="number" id="playerCount" min="2" max="6" required>
+    <button onclick="generatePlayerInputs()">Generate Player Inputs</button>
+
+    <form id="playerForm" onsubmit="startGame(event)">
+        <div id="playerInputs"></div>
+        <button type="submit">Start Game</button>
+    </form>
+
 <script type="text/javascript">
     // Bind SpaceBar key to the "Next Action" button.
 	window.onkeydown = function(event){
@@ -80,6 +91,64 @@
 			document.querySelector('#nextAction').click();
 		}
 	};
+
+    function generatePlayerInputs() {
+        const playerCount = document.getElementById("playerCount").value;
+        const playerInputs = document.getElementById("playerInputs");
+
+        // Clear any existing inputs
+        playerInputs.innerHTML = "";
+
+        // Ensure player count is between 2 and 6
+        if (playerCount < 2 || playerCount > 6) {
+            alert("Please enter a number between 2 and 6.");
+            return;
+        }
+
+        // Create input fields for each player
+        for (let i = 0; i < playerCount; i++) {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = `player${i + 1}`;
+            input.placeholder = `Enter name for Player ${i + 1}`;
+            input.required = true;
+            playerInputs.appendChild(input);
+            playerInputs.appendChild(document.createElement("br"));
+        }
+    }
+
+    function startGame(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
+
+        const playerCount = document.getElementById("playerCount").value;
+        const playerInputs = document.querySelectorAll("#playerInputs input");
+
+        // Build the players array
+        const players = Array.from(playerInputs).map(input => ({ name: input.value }));
+
+        // The data to send in the POST request
+        const data = {
+            players: players
+        };
+
+        // Send POST request to /start_game/{number}
+        fetch(`/start_game/${playerCount}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log("Game started successfully:", result);
+                alert("Game started successfully!");
+            })
+            .catch(error => {
+                console.error("Error starting game:", error);
+                alert("Error starting game. Check console for details.");
+            });
+    }
 </script>
 
 </body>
