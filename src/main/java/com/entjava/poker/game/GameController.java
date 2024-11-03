@@ -2,15 +2,12 @@ package com.entjava.poker.game;
 
 import com.entjava.poker.card.BlankCard;
 import com.entjava.poker.card.Card;
-import com.entjava.poker.repository.PlayerRepository;
 import com.entjava.poker.service.EventPlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,7 +65,7 @@ public class GameController {
 	}
 
 	@PostMapping("/start_game/{playerCount}")
-	public String startGame(@RequestBody Map<String, List<Map<String, String>>> request) {
+	public String startGame(@RequestBody Map<String, List<Map<String, String>>> request, Model model) {
 
 
 		List<Map<String, String>> players = request.get("players");
@@ -82,16 +79,15 @@ public class GameController {
 			System.out.println(
 				"User \"" + missingNames.get(0) + "\" is not registered"
 			);
-		} else {
+		} else if (missingNames.size() > 1) {
 			System.out.println(
 				"Users \"" + String.join("\", \"", missingNames) + "\" are not registered"
 			);
 		}
-		if (!missingNames.isEmpty()) {
-			return "redirect:/";
-		}
 
-		game.startNewGame();
+		playerNames.removeAll(missingNames);
+		game.startNewGameWithPlayers(playerNames);
+
 		return "redirect:/";
 	}
 }

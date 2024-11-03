@@ -139,10 +139,16 @@
             },
             body: JSON.stringify(data)
         })
-            .then(response => response.json())
-            .then(result => {
-                console.log("Game started successfully:", result);
-                alert("Game started successfully!");
+            .then(console.log("TEST")).then(response => {
+                if (response.redirected) {
+                    console.log('REDIRECT')
+                    window.location.href = response.url;
+                } else {
+                    return response.json().then(result => {
+                        console.log("Game started successfully:", result);
+                        alert("Game started successfully!");
+                    });
+                }
             })
             .catch(error => {
                 console.error("Error starting game:", error);

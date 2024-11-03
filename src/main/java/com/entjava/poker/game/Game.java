@@ -70,6 +70,13 @@ public class Game {
         dealHands();
     }
 
+    public void startNewGameWithPlayers(List<String> playerNames) {
+        this.players = playerNames.stream()
+            .map(Player::new)
+            .collect(Collectors.toList());
+        
+        startNewGame();
+    }
     /**
      * The action to take after a new game has been started.
      *
