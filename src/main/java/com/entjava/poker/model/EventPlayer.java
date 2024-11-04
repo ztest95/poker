@@ -33,10 +33,6 @@ public class EventPlayer {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public Event getEvent() {
         return event;
     }

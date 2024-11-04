@@ -17,23 +17,11 @@ public class PlayerEntity {
 
     @OneToMany
     @JsonBackReference
-    @JoinTable(
-            name="event_player",
-            joinColumns = {
-                    @JoinColumn(name = "player_id", referencedColumnName = "id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "event_id", referencedColumnName = "id")
-            }
-    )
+
     private Set<PlayerEntity> events = new HashSet<>();
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -42,14 +30,6 @@ public class PlayerEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<PlayerEntity> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<PlayerEntity> events) {
-        this.events = events;
     }
 
 }

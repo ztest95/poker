@@ -1,8 +1,5 @@
 package com.entjava.poker.dto;
 
-import com.entjava.poker.model.Event;
-import com.entjava.poker.model.Player;
-
 public class EventPlayerDTO {
     public Integer getId() {
         return id;
