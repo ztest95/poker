@@ -1,6 +1,6 @@
 package com.entjava.poker.service;
 
-import com.entjava.poker.model.Player;
+import com.entjava.poker.model.PlayerEntity;
 import com.entjava.poker.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public List<Player> getAllPlayers() {
+    public List<PlayerEntity> getAllPlayers() {
         return playerRepository.findAll();
     }
 
-    public Optional<Player> getPlayerById(Integer id) {
+    public Optional<PlayerEntity> getPlayerById(Integer id) {
         return playerRepository.findById(id);
     }
 

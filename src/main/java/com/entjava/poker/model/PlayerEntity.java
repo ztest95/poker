@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Player {
+@Table(name = "player")
+public class PlayerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +26,7 @@ public class Player {
                     @JoinColumn(name = "event_id", referencedColumnName = "id")
             }
     )
-    private Set<Player> events = new HashSet<>();
+    private Set<PlayerEntity> events = new HashSet<>();
 
     public int getId() {
         return id;
@@ -43,11 +44,11 @@ public class Player {
         this.name = name;
     }
 
-    public Set<Player> getEvents() {
+    public Set<PlayerEntity> getEvents() {
         return events;
     }
 
-    public void setEvents(Set<Player> events) {
+    public void setEvents(Set<PlayerEntity> events) {
         this.events = events;
     }
 

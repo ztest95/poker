@@ -16,7 +16,7 @@ public class EventPlayer {
 
     @ManyToOne
     @JoinColumn(name = "player_id")
-    private Player player;
+    private PlayerEntity player;
 
     private boolean isWinner;
     private String hand;
@@ -45,11 +45,11 @@ public class EventPlayer {
         this.event = event;
     }
 
-    public Player getPlayer() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 

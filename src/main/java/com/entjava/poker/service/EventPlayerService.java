@@ -3,7 +3,7 @@ package com.entjava.poker.service;
 import com.entjava.poker.dto.*;
 import com.entjava.poker.model.Event;
 import com.entjava.poker.model.EventPlayer;
-import com.entjava.poker.model.Player;
+import com.entjava.poker.model.PlayerEntity;
 import com.entjava.poker.repository.EventPlayerRepository;
 import com.entjava.poker.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +71,10 @@ public class EventPlayerService {
 
     public List<String> checkPlayerNamesExist(List<String> playerNames) {
 
-        List<Player> foundPlayers = playerRepository.findByNameIn(playerNames);
+        List<PlayerEntity> foundPlayers = playerRepository.findByNameIn(playerNames);
 
         Set<String> foundPlayerNames = foundPlayers.stream()
-                .map(Player::getName)
+                .map(PlayerEntity::getName)
                 .collect(Collectors.toSet());
 
         return playerNames.stream()

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.entjava.poker.model.Event;
-import com.entjava.poker.model.Player;
+import com.entjava.poker.model.PlayerEntity;
 import com.entjava.poker.dto.EventResultDTO;
 import com.entjava.poker.service.EventService;
 import com.entjava.poker.service.PlayerService;
@@ -53,14 +53,14 @@ public class MyController {
     }
 
     @GetMapping("/players")
-    public ResponseEntity<List<Player>> getAllPlayers() {
-        List<Player> players = playerService.getAllPlayers();
+    public ResponseEntity<List<PlayerEntity>> getAllPlayers() {
+        List<PlayerEntity> players = playerService.getAllPlayers();
         return ResponseEntity.ok(players);
     }
 
     @GetMapping("/player/{id}")
-    public ResponseEntity<Player> getPlayerById(@PathVariable Integer id) {
-        Player player = playerService.getPlayerById(id).orElse(null);
+    public ResponseEntity<PlayerEntity> getPlayerById(@PathVariable Integer id) {
+        PlayerEntity player = playerService.getPlayerById(id).orElse(null);
         return ResponseEntity.ok(player);
     }
 

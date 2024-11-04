@@ -24,7 +24,7 @@ public class Event {
                     @JoinColumn(name = "player_id", referencedColumnName = "id")
             }
     )
-    private Set<Player> players = new HashSet<>();
+    private Set<PlayerEntity> players = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -34,11 +34,11 @@ public class Event {
         this.id = id;
     }
 
-    public Set<Player> getPlayers() {
+    public Set<PlayerEntity> getPlayers() {
         return this.players;
     }
 
-    public void setPlayers(Set<Player> players) {
+    public void setPlayers(Set<PlayerEntity> players) {
         this.players = players;
     }
 
