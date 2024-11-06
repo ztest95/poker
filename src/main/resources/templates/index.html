@@ -9,10 +9,24 @@
 </head>
 <body class="container mt-4 bg-light">
 
-    <div class="row">
-        <div class="col">
-            <h4>Texas Hold'em Poker Simulator</h4>
+    <div class="center-wrapper">
+        <h1>🃏 Texas Hold'em Poker Simulator 🃏</h1>
+    </div>
+
+    <div class="center-wrapper">
+        <div class="container-form">
+            <label for="playerCount">Enter number of players (2-6): </label>
+            <input type="number" id="playerCount" min="2" max="6" required>
+            <button onclick="generatePlayerInputs()">Generate Player Inputs</button>
+
+            <form id="playerForm" onsubmit="startGame(event)">
+                <div id="playerInputs"></div>
+                <button type="submit">Start Game</button>
+            </form>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col">
             <div class="text-right mb-2">
                 <a class="btn btn-warning" id="nextAction" href="/nextAction"><span th:text="${game.hasEnded() ? 'New Game' : 'Next Action'}"></span> [Space]</a>
@@ -71,17 +85,6 @@
             </div>
         </div>
     </div>
-
-    <h1>Start Game</h1>
-
-    <label for="playerCount">Enter number of players (2-6): </label>
-    <input type="number" id="playerCount" min="2" max="6" required>
-    <button onclick="generatePlayerInputs()">Generate Player Inputs</button>
-
-    <form id="playerForm" onsubmit="startGame(event)">
-        <div id="playerInputs"></div>
-        <button type="submit">Start Game</button>
-    </form>
 
 <script type="text/javascript">
     // Bind SpaceBar key to the "Next Action" button.
