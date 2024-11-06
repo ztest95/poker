@@ -41,7 +41,9 @@ public class GameController {
 		for (int communityCardNumber = 1; communityCardNumber <= 5; communityCardNumber++) {
 			model.addAttribute("communityCard" + communityCardNumber, fetchNextCommunityCard(communityCardIterator));
 		}
-
+		
+		Map<String, Long> totalWins = eventPlayerService.getTotalWinsByPlayer();
+		model.addAttribute("totalWins", totalWins);
 		return "index";
 	}
 

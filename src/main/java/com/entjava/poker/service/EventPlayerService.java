@@ -6,10 +6,14 @@ import com.entjava.poker.model.EventPlayer;
 import com.entjava.poker.model.PlayerEntity;
 import com.entjava.poker.repository.EventPlayerRepository;
 import com.entjava.poker.repository.PlayerRepository;
+import com.entjava.poker.service.EventService;
+import com.entjava.poker.service.PlayerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -82,6 +86,15 @@ public class EventPlayerService {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, Long> getTotalWinsByPlayer() {
+        List<Object[]> results = eventPlayerRepository.findTotalWinsByPlayer();
+        return results.stream()
+                .collect(Collectors.toMap(
+                        result -> (String) result[0],
+                        result -> (Long) result[1]
+                ));
+    }
+    
     private EventPlayerDTO convertToDTO(EventPlayer eventPlayer) {
         EventPlayerDTO dto = new EventPlayerDTO();
         dto.setId(eventPlayer.getId());

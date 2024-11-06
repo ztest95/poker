@@ -85,6 +85,18 @@
             </div>
         </div>
     </div>
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h3>Total Wins</h3>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li th:each="entry : ${totalWins}">
+                    <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span> wins
+                </li>
+            </ul>
+        </div>
+    </div>
 
 <script type="text/javascript">
     // Bind SpaceBar key to the "Next Action" button.
