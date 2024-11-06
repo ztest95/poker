@@ -2,10 +2,13 @@ package com.entjava.poker.game;
 
 import com.entjava.poker.card.BlankCard;
 import com.entjava.poker.card.Card;
+import com.entjava.poker.dto.EventResultDTO;
 import com.entjava.poker.service.EventPlayerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -64,6 +67,12 @@ public class GameController {
 		}
 
 		return "redirect:/";
+	}
+
+	@GetMapping("/event/{id}")
+	public ResponseEntity<EventResultDTO> custom_getEventById(@PathVariable int id) {
+		EventResultDTO event = eventPlayerService.custom_getEventById(id).orElse(null);
+		return ResponseEntity.ok(event);
 	}
 
 	@PostMapping("/start_game/{playerCount}")
